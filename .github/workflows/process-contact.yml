@@ -1,0 +1,30 @@
+name: Processar Contacto
+
+on:
+  repository_dispatch:
+    types: [contact_form]
+
+permissions:
+  contents: write
+
+jobs:
+  salvar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Criar ficheiro de contacto
+        run: |
+          ts=$(date +'%Y-%m-%dT%H:%M:%SZ')
+          echo "Nome: ${{ github.event.client_payload.nome }}" > "contacts/$ts.md"
+          echo "Email: ${{ github.event.client_payload.email }}" >> "contacts/$ts.md"
+          echo >> "contacts/$ts.md"
+          echo "${{ github.event.client_payload.mensagem }}" >> "contacts/$ts.md"
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add contacts/*.md
+          git commit -m "Novo contacto $ts"
+          git push
