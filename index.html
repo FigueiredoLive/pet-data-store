@@ -38,7 +38,7 @@
 
       document.getElementById('status').textContent = resp.ok
         ? 'Mensagem enviada com sucesso!'
-        : 'Erro ao enviar a mensagem.';
+        : 'Erro ao enviar a mensagem.' + `</br>status code:` + ${resp.status} + `</br>Message:` + ${resp.statusText};
     });
   </script>
 </body>
