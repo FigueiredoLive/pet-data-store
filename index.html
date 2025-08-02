@@ -32,7 +32,7 @@
       });
       document.getElementById('status').textContent = resp.ok
         ? 'Mensagem enviada com sucesso!'
-        : 'Falha ao enviar.';
+        : 'Falha ao enviar.' + `${resp.status} ${resp.statusText}`;
     });
   </script>
 </body>
