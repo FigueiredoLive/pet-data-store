@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head><meta charset="UTF-8"><title>Contacto</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>Contacto</title>
+</head>
 <body>
-  <h1>Contacto</h1>
+  <h1>Formulário de Contacto</h1>
   <form id="contact">
     <input name="nome" placeholder="Nome" required><br>
     <input type="email" name="email" placeholder="Email" required><br>
@@ -20,19 +23,22 @@
         email: form.get('email'),
         mensagem: form.get('mensagem')
       };
+
       const resp = await fetch('https://api.github.com/repos/figueiredolive/pet-data-store/dispatches', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          // Note: Sem token aqui — apenas se testares com curl autenticado
         },
         body: JSON.stringify({
           event_type: 'contact_form',
           client_payload: body
         })
       });
+
       document.getElementById('status').textContent = resp.ok
         ? 'Mensagem enviada com sucesso!'
-        : 'Falha ao enviar.' + `${resp.status} ${resp.statusText}`;
+        : 'Erro ao enviar a mensagem.';
     });
   </script>
 </body>
